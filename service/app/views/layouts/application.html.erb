@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Schedule Service</title>
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+
+  <%= stylesheet_link_tag '//cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css' %>
+  <%= javascript_include_tag '//cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js' %>
+
+  <script>
+    $(document).ready(function(){
+      $('table.display_only').DataTable({
+        "ordering": false,
+        "bFilter": false,
+        "bPaginate": false,
+        "bInfo": false
+      });
+      $('table.data_full').DataTable({
+        "order": []
+      });
+    })
+  </script>
+  
+  <% if content_for? :for_head %>
+    <%= yield :for_head %>
+  <% end %>
+</head>
+<body>
+  <div style="background:#FFF0E0">
+    <div class="left_menu">
+      <ul>
+        <% if @family == "schedule" %>
+          <li><%=link_to_unless params[:controller] == "schedule_programs", "Scheduled Program", schedule_programs_path, {:class=>"menu"} %></li>
+          <li><%=link_to_unless params[:controller] == "schedule_program_episodes", "Scheduled Episode", schedule_program_episodes_path, {:class=>"menu"} %></li>
+          <li><%=link_to_unless params[:controller] == "final_schedule_programs", "Final Schedule", final_schedule_programs_path, {:class=>"menu"} %></li>
+          <li><%=link_to_unless params[:controller] == "channels", "Channel", channels_path, {:class=>"menu"}%></li>
+          <li><%=link_to_unless params[:controller] == "channel_schedule_versions", "Version", channel_schedule_versions_path, {:class=>"menu"} %></li>
+        <% else %>
+          <li><%=link_to_unless params[:controller] == "programs", "Program", programs_path, {:class=>"menu"} %></li>
+          <li><%=link_to_unless params[:controller] == "program_episodes", "Episode", program_episodes_path, {:class=>"menu"} %></li>
+          <li><%=link_to_unless params[:controller] == "videos", "Video", videos_path, {:class=>"menu"} %></li>
+          <li><%=link_to_unless params[:controller] == "providers", "Provider", providers_path, {:class=>"menu"} %></li>
+          <li><%=link_to_unless params[:controller] == "categories", "Category", categories_path, {:class=>"menu"} %></li>
+        <% end %>
+      </ul>
+    </div>
+    <div class="right_menu">
+      <ul>
+        <li><%=link_to_unless @family == "program", "PROGRAM", {controller: "programs", action: "index"}, {:class=>"menu"} %></li>
+        <li><%=link_to_unless @family == "schedule", "SCHEDULE", {controller: "final_schedule_programs", action: "index"}, {:class=>"menu"} %></li>
+      </ul>
+    </div>
+    <div style="clear: both;"></div>
+  </div>    
+  <div style="background:#FFFFF0">
+    <div class="left_menu">
+      <ul>
+        <li><%=link_to_unless_current "List", {action: "index"}, {:class=>"menu"} %></li>
+        <li><%=link_to_unless_current "New", {action: "new"}, {:class=>"menu"} %></li> 
+      </ul>
+    </div>
+    <div style="clear: both;"></div>
+  </div>
+  <%= yield %>
+
+</body>
+</html>

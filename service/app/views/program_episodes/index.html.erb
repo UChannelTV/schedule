@@ -1,0 +1,36 @@
+<h2>Program Episodes</h2>
+<p id="notice"><%= notice %></p>
+
+<table id='program_list' class="display data_full">
+  <thead>
+    <tr>
+      <th align="left">ID</th>
+      <th align="left">Program ID</th>
+      <th align="left">Episode</th>
+      <th align="left">Date</th>
+      <th align="left">Video ID</th>
+      <th align="left">Is Short Clip</th>
+      <th align="left">Is Special</th>
+      <th align="left">Status</th>
+      <th align="left">Remark</th>
+      <th align="left">Action</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @records.each do |program| %>
+      <tr>
+        <td><%= link_to program["id"], action: 'show', id: program["id"] %></td>
+        <td><%= program["program_id"] %></td>
+        <td><%= program["episode"] %></td>
+        <td><%= program["date"] %></td>
+        <td><%= program["video_id"] %></td>
+        <td><%= program["is_short_clip"] %></td>
+        <td><%= program["is_special"] %></td>
+        <td><%= program["status"] %></td>
+        <td><%= program["remark"] %></td>
+        <td><%= link_to 'Delete', {action: 'destroy', id: program["id"]}, method: 'delete', data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

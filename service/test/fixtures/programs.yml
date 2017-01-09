@@ -1,0 +1,29 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  code: MyString
+  eng_name: MyString
+  category_id: 1
+  provider_id: 1
+  total_episodes: 1
+  language: MyString
+  is_in_house: false
+  is_live: false
+  is_children: false
+  status: MyString
+  remark: MyString
+
+two:
+  name: MyString
+  code: MyString
+  eng_name: MyString
+  category_id: 1
+  provider_id: 1
+  total_episodes: 1
+  language: MyString
+  is_in_house: false
+  is_live: false
+  is_children: false
+  status: MyString
+  remark: MyString

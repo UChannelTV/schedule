@@ -1,0 +1,34 @@
+<h2>Schedule Program</h2>
+
+<p id="notice"><%= notice %></p>
+
+<% if ! @record.nil? %>
+  <table id='schedule_program_info' class="display display_only">
+    <thead>
+      <tr>
+        <th align="left">Field</th>
+        <th align="left">Value</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr><td>ID</td><td><%= @record["id"] %></td></tr>
+      <tr><td>Channel ID</td><td><%= @record["channel_id"] %></td></tr>
+      <tr><td>Version</td><td><%= @record["version"] %></td></tr>
+      <tr><td>Program ID</td><td><%= @record["program_id"] %></td></tr>
+      <tr><td>Week Option</td><td><%= @record["week_option"] %></td></tr>
+      <tr><td>Day</td><td><%= @record["day"] %></td></tr>
+      <tr><td>Hour</td><td><%= @record["hour"] %></td></tr>
+      <tr><td>Minute</td><td><%= @record["minute"] %></td></tr>
+      <tr><td>Second</td><td><%= @record["second"] %></td></tr>
+      <tr><td>Status</td><td><%= @record["status"] %></td></tr>
+      <tr><td>Remark</td><td><%= @record["remark"] %></td></tr>
+      <tr><td>Created At</td><td><%= @record["created_at"] %></td></tr>
+      <tr><td>Updated At</td><td><%= @record["updated_at"] %></td></tr>
+    </tbody>
+  </table>
+
+  <br/>
+
+  <%= link_to 'Edit', action: 'edit', id: @record["id"] %>
+<% end %>

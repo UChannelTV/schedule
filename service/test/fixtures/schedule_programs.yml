@@ -1,0 +1,27 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  channel_id: 1
+  version: MyString
+  program_id: MyString
+  integer: MyString
+  week_option: 1
+  day: 1
+  hour: 1
+  minute: 1
+  second: 1
+  status: MyString
+  remark: MyString
+
+two:
+  channel_id: 1
+  version: MyString
+  program_id: MyString
+  integer: MyString
+  week_option: 1
+  day: 1
+  hour: 1
+  minute: 1
+  second: 1
+  status: MyString
+  remark: MyString

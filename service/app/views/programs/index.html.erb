@@ -1,0 +1,46 @@
+<h2>Programs</h2>
+<p id="notice"><%= notice %></p>
+
+<table id='program_list' class="display data_full">
+  <thead>
+    <tr>
+      <th align="left">ID</th>
+      <th align="left">Name</th>
+      <th align="left">Code</th>
+      <th align="left">English Name</th>
+      <th align="left">Category ID</th>
+      <th align="left">Provider ID</th>
+      <th align="left">Total Episodes</th>
+      <th align="left">Expected Duration (minutes)</th>
+      <th align="left">Language</th>
+      <th align="left">Is in House</th>
+      <th align="left">Is Live</th>
+      <th align="left">Is Children</th>
+      <th align="left">Status</th>
+      <th align="left">Remark</th>
+      <th align="left">Action</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @records.each do |program| %>
+      <tr>
+        <td><%= link_to program["id"], action: 'show', id: program["id"] %></td>
+        <td><%= program["name"] %></td>
+        <td><%= program["code"] %></td>
+        <td><%= program["eng_name"] %></td>
+        <td><%= program["category_id"] %></td>
+        <td><%= program["provider_id"] %></td>
+        <td><%= program["total_episodes"] %></td>
+        <td><%= program["expected_duration"] %></td>
+        <td><%= program["language"] %></td>
+        <td><%= program["is_in_house"] %></td>
+        <td><%= program["is_live"] %></td>
+        <td><%= program["is_children"] %></td>
+        <td><%= program["status"] %></td>
+        <td><%= program["remark"] %></td>
+        <td><%= link_to 'Delete', {action: 'destroy', id: program["id"]}, method: 'delete', data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

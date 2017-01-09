@@ -1,0 +1,23 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  program_id: 1
+  episode: 1
+  date: 2017-01-02
+  title: MyString
+  eng_title: MyString
+  description: MyText
+  tags: MyText
+  status: MyString
+  remark: MyString
+
+two:
+  program_id: 1
+  episode: 1
+  date: 2017-01-02
+  title: MyString
+  eng_title: MyString
+  description: MyText
+  tags: MyText
+  status: MyString
+  remark: MyString

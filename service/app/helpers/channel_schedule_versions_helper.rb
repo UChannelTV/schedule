@@ -1,0 +1,2 @@
+module ChannelScheduleVersionsHelper
+end

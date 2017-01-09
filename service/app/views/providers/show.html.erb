@@ -1,0 +1,31 @@
+<h2>Provider</h2>
+
+<p id="notice"><%= notice %></p>
+
+<% if ! @record.nil? %>
+  <table id='provider_info' class="display display_only">
+    <thead>
+      <tr>
+        <th align="left">Field</th>
+        <th align="left">Value</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr><td>ID</td><td><%= @record["id"] %></td></tr>
+      <tr><td>Code</td><td><%= @record["code"] %></td></tr>
+      <tr><td>Name</td><td><%= @record["name"] %></td></tr>
+      <tr><td>Full Name</td><td><%= @record["full_name"] %></td></tr>
+      <tr><td>English Name</td><td><%= @record["eng_name"] %></td></tr>
+      <tr><td>Source</td><td><%= @record["source"] %></td></tr>
+      <tr><td>Status</td><td><%= @record["status"] %></td></tr>
+      <tr><td>Remark</td><td><%= @record["remark"] %></td></tr>
+      <tr><td>Created At</td><td><%= @record["created_at"] %></td></tr>
+      <tr><td>Updated At</td><td><%= @record["updated_at"] %></td></tr>
+    </tbody>
+  </table>
+
+  <br/>
+
+  <%= link_to 'Edit', action: 'edit', id: @record["id"] %>
+<% end %>

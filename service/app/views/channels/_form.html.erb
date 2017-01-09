@@ -1,0 +1,20 @@
+<%= form_tag(@url, method: @method) do |f| %>
+  <table id='channel_info' class="display display_only">
+    <thead>
+      <tr>
+        <th align="left">Field</th>
+        <th align="left">Value</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr><td>Name</td><td><%= text_field_tag "name", @record["name"], size: "50", maxlength: "254"%></td></tr>
+      <tr><td>Timezone</td><td><%= text_field_tag "timezone", @record["timezone"], size: "50", maxlength: "254" %></td></tr>
+    </tbody>
+  </table>
+
+  <p/>
+  <div class="actions">
+    <%= submit_tag %>
+  </div>
+<% end %>

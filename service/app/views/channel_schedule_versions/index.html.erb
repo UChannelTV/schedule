@@ -1,0 +1,24 @@
+<h2>Channel Schedule Versions</h2>
+<p id="notice"><%= notice %></p>
+
+<table id='channel_schedule_version_list' class="display data_full">
+  <thead>
+    <tr>
+      <th align="left">ID</th>
+      <th align="left">Channel ID</th>
+      <th align="left">Active Day</th>
+      <th align="left">Action</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @records.each do |channel| %>
+      <tr>
+        <td><%= link_to channel["id"], action: 'show', id: channel["id"] %></td>
+        <td><%= channel["channel_id"] %></td>
+        <td><%= channel["active_day"] %></td>
+        <td><%= link_to 'Delete', {action: 'destroy', id: channel["id"]}, method: 'delete', data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

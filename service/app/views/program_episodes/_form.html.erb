@@ -1,0 +1,26 @@
+<%= form_tag(@url, method: @method) do |f| %>
+  <table id='program_episode_info' class="display display_only">
+    <thead>
+      <tr>
+        <th align="left">Field</th>
+        <th align="left">Value</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr><td>Program ID</td><td><%= text_field_tag "program_id", @record["program_id"], size: "50", maxlength: "254"%></td></tr>
+      <tr><td>Episode</td><td><%= text_field_tag "episode", @record["episode"], size: "50", maxlength: "254"%></td></tr>
+      <tr><td>Date</td><td><%= text_field_tag "date", @record["date"], size: "50", maxlength: "254"%></td></tr>
+      <tr><td>Video ID</td><td><%= text_field_tag "video_id", @record["video_id"], size: "50", maxlength: "254"%></td></tr>
+      <tr><td>Is Short Clip</td><td><%= check_box_tag "is_short_clip", '1', @record["is_short_clip"] %></td></tr>
+      <tr><td>Is Special</td><td><%= check_box_tag "is_special", '1', @record["is_special"] %></td></tr>
+      <tr><td>Status</td><td><%= text_field_tag "status", @record["status"], size: "50", maxlength: "254" %></td></tr>
+      <tr><td>Remark</td><td><%= text_field_tag "remark", @record["remark"], size: "50", maxlength: "254" %></td></tr>
+    </tbody>
+  </table>
+
+  <p/>
+  <div class="actions">
+    <%= submit_tag %>
+  </div>
+<% end %>
