@@ -1,0 +1,26 @@
+<%= form_tag(@url, method: @method) do |f| %>
+  <table id='short_clip_priority_info' class="display display_only">
+    <thead>
+      <tr>
+        <th align="left">Field</th>
+        <th align="left">Value</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr><td>Channel ID</td><td><%= text_field_tag "channel_id", @record["channel_id"], size: "50", maxlength: "254"%></td></tr>
+      <tr><td>Version</td><td><%= text_field_tag "version", @record["version"], size: "50", maxlength: "254"%></td></tr>
+      <tr><td>Start Hour</td><td><%= select_tag "start_hour", options_for_select(Array(0..23), @record["hour"]) %></td></tr>
+      <tr><td>Number of Hours</td><td><%= text_field_tag "num_hours", @record["num_hours"], size: "50", maxlength: "254" %></td></tr>
+      <tr><td>Category ID</td><td><%= text_field_tag "category_id", @record["category_id"], size: "50", maxlength: "254" %></td></tr>
+      <tr><td>Priority</td><td><%= text_field_tag "priority", @record["priority"], size: "50", maxlength: "254" %></td></tr>
+      <tr><td>Status</td><td><%= select_tag "status", options_for_select(@status_list, @record["status"]) %></td></tr>
+      <tr><td>Remark</td><td><%= text_field_tag "remark", @record["remark"], size: "50", maxlength: "254" %></td></tr>
+    </tbody>
+  </table>
+
+  <p/>
+  <div class="actions">
+    <%= submit_tag %>
+  </div>
+<% end %>

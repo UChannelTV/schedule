@@ -1,0 +1,36 @@
+<h2>Short Clip Priorities</h2>
+<p id="notice"><%= notice %></p>
+
+<table id='short_clip_priority_list' class="display data_full">
+  <thead>
+    <tr>
+      <th align="left">ID</th>
+      <th align="left">Channel ID</th>
+      <th align="left">Version</th>
+      <th align="left">Start Hour</th>
+      <th align="left">Number of Hours</th>
+      <th align="left">Category ID</th>
+      <th align="left">Priority</th>
+      <th align="left">Status</th>
+      <th align="left">Remark</th>
+      <th align="left">Action</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @records.each do |priority| %>
+      <tr>
+        <td><%= link_to priority["id"], action: 'show', id: priority["id"] %></td>
+        <td><%= priority["channel_id"] %></td>
+        <td><%= priority["version"] %></td>
+        <td><%= priority["start_hour"] %></td>
+        <td><%= priority["num_hours"] %></td>
+        <td><%= priority["category_id"] %></td>
+        <td><%= priority["priority"] %></td>
+        <td><%= priority["status"] %></td>
+        <td><%= priority["remark"] %></td>
+        <td><%= link_to 'Delete', {action: 'destroy', id: priority["id"]}, method: 'delete', data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

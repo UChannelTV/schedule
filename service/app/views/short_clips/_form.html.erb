@@ -1,0 +1,51 @@
+<h3>Change Program Provider</h3>
+<%= form_tag({:action => @refresh_action}, {:method => "PUT"}) do %>
+  <table id='list_query' class="display display_only">
+    <thead>
+      <tr>
+        <th align="left">Field</th>
+        <th align="left">Value</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr><td>Provider</td><td><%= select_tag "provider_id", options_from_collection_for_select(Provider.all, "id", "name", @provider_id) %></td></tr>
+    </tbody>
+  </table>
+
+  <p/>
+  <div class="actions">
+    <%= hidden_field_tag 'video_id', @record["video_id"] %>
+    <%= submit_tag 'Update Programs' %>
+  </div>
+<% end %>
+<br/>
+<br/>
+
+<%= form_tag(@url, method: @method) do |f| %>
+  <table id='short_clip_info' class="display display_only">
+    <thead>
+      <tr>
+        <th align="left">Field</th>
+        <th align="left">Value</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr><td>Video</td><td><%= @record["video"] %></td></tr>
+      <tr><td>Duration</td><td><%= "%02d:%02d:%02d" % [@record["duration"]/3600, @record["duration"] % 60 / 60, @record["duration"] % 60]  %></td></tr>
+      <tr><td>Program</td><td><%= select_tag "program_id", options_from_collection_for_select(Program._find(@provider_id, 0, "all", 1000), "id", "name", @record["program_id"]) %></td></tr>
+      <tr><td>Episode</td><td><%= text_field_tag "episode", @record["episode"], size: "50", maxlength: "254"%></td></tr>
+      <tr><td>Category</td><td><%= select_tag "category_id", options_from_collection_for_select(Category.all, "id", "name", @record["category_id"]) %></td></tr>
+      <tr><td>Is Special</td><td><%= check_box_tag "is_special", '1', @record["is_special"] %></td></tr>
+      <tr><td>Status</td><td><%= select_tag "status", options_for_select(@status_list, @record["status"]) %></td></tr>      
+      <tr><td>Remark</td><td><%= text_field_tag "remark", @record["remark"], size: "50", maxlength: "254" %></td></tr>
+    </tbody>
+  </table>
+
+  <p/>
+  <div class="actions">
+    <%= hidden_field_tag 'video_id', @record["video_id"] %>
+    <%= submit_tag %>
+  </div>
+<% end %>

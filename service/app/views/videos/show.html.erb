@@ -12,11 +12,12 @@
     </thead>
 
     <tbody>
-      <tr><td>ID</td><td><%= @record["id"] %></td></tr>
+      <tr><td>Name</td><td><%= @record["name"] %></td></tr>
       <tr><td>Path</td><td><%= @record["path"] %></td></tr>
+      <tr><td>TelVue ID</td><td><%= @record["telvue_id"] %></td></tr>
       <tr><td>Format</td><td><%= @record["format"] %></td></tr>
       <tr><td>Size</td><td><%= @record["size"] %></td></tr>
-      <tr><td>Duration</td><td><%= @record["duration"] %></td></tr>
+      <tr><td>Duration</td><td><%= Utility.durationStr(@record["duration"]) %></td></tr>
       <tr><td>Mux Bitrate</td><td><%= @record["mux_bitrate"] %></td></tr>
       <tr><td>Variable Mux Rate</td><td><%= @record["variable_mux_rate"] %></td></tr>
       <tr><td>Video Codec</td><td><%= @record["video_codec"] %></td></tr>

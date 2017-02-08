@@ -1,5 +1,5 @@
 class ChannelScheduleVersionsController < AdminController
   def initialize
-    super(ChannelScheduleVersion)
+    super(ChannelScheduleVersion, false)
   end
 end

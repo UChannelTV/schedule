@@ -1,0 +1,28 @@
+<%= form_tag(@url, method: @method) do |f| %>
+  <table id='short_clip_priomotion_info' class="display display_only">
+    <thead>
+      <tr>
+        <th align="left">Field</th>
+        <th align="left">Value</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr><td>Channel ID</td><td><%= text_field_tag "channel_id", @record["channel_id"], size: "50", maxlength: "254"%></td></tr>
+      <tr><td>Start Day</td><td><%= text_field_tag "start_day", @record["start_day"], size: "50", maxlength: "254", class: 'datepicker' %></td></tr>
+      <tr><td>End Day</td><td><%= text_field_tag "end_day", @record["end_day"], size: "50", maxlength: "254", class: 'datepicker' %></td></tr>
+      <tr><td>Start Hour</td><td><%= select_tag "start_hour", options_for_select(Array(0..23), @record["hour"]) %></td></tr>
+      <tr><td>Number of Hours</td><td><%= text_field_tag "num_hours", @record["num_hours"], size: "50", maxlength: "254" %></td></tr>
+      <tr><td>Program ID</td><td><%= text_field_tag "program_id", @record["program_id"], size: "50", maxlength: "254" %></td></tr>
+      <tr><td>Episode</td><td><%= text_field_tag "episode", @record["episode"], size: "50", maxlength: "254" %></td></tr>
+      <tr><td>Number of Plays</td><td><%= text_field_tag "num_plays", @record["num_plays"], size: "50", maxlength: "254" %></td></tr>
+      <tr><td>Status</td><td><%= select_tag "status", options_for_select(@status_list, @record["status"]) %></td></tr>
+      <tr><td>Remark</td><td><%= text_field_tag "remark", @record["remark"], size: "50", maxlength: "254" %></td></tr>
+    </tbody>
+  </table>
+
+  <p/>
+  <div class="actions">
+    <%= submit_tag %>
+  </div>
+<% end %>

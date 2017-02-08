@@ -1,5 +1,5 @@
 class ChannelsController < AdminController
   def initialize
-    super(Channel)
+    super(Channel, false)
   end
 end

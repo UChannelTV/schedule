@@ -20,6 +20,9 @@ class CreatePrograms < ActiveRecord::Migration
 
     add_index :programs, :name, :unique => true
     add_index :programs, :code, :unique => true
+    add_index :programs, :provider_id
+    add_index :programs, :category_id
+    add_index :programs, :status
     execute "ALTER TABLE programs change `created_at` `created_at` datetime not null default CURRENT_TIMESTAMP;"
     execute "ALTER TABLE programs change `updated_at` `updated_at` timestamp;"
   end

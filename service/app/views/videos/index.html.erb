@@ -1,24 +1,38 @@
 <h2>Videos</h2>
 <p id="notice"><%= notice %></p>
 
+<h3>Filter</h3>
+<%= form_tag({}, {:method => "PUT"}) do %>
+  <table id='list_query' class="display display_only">
+    <thead>
+      <tr>
+        <th align="left">Field</th>
+        <th align="left">Value</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr><td>Status</td><td><%= select_tag "status", options_for_select(@statuses, @status) %></td></tr>
+      <tr><td>Limit</td><td><%= text_field_tag :limit, @limit, :size=>"50", :maxlength=>"254" %></td></tr>
+    </tbody>
+  </table>
+
+  <p/>
+  <div class="actions">
+    <%= submit_tag 'Update List' %>
+  </div>
+<% end %>
+<br/>
+<br/>
+
 <table id='video_list' class="display data_full">
   <thead>
     <tr>
-      <th align="left">ID</th>
-      <th align="left">Path</th>
-      <th align="left">Format</th>
-      <th align="left">Size</th>
-      <th align="left">Duration</th>
-      <th align="left">Mux Bitrate</th>
-      <th align="left">Variable Mux Rate</th>
-      <th align="left">Video Codec</th>
-      <th align="left">Video Bitrate</th>
-      <th align="left">Frame Rate</th>
-      <th align="left">Video Height</th>
-      <th align="left">Video Width</th>
-      <th align="left">Audio Codec</th>
-      <th align="left">Audio Bitrate</th>
-      <th align="left">Audio Sample Rate</th>
+      <th align="left">Name</th>
+      <th align="left">Program</th>
+      <th align="left">Short Clip</th>
+      <th align="left">TelVue ID</th>
+      <th align="left">Created At</th>
       <th align="left">Status</th>
       <th align="left">Remark</th>
       <th align="left">Action</th>
@@ -28,21 +42,21 @@
   <tbody>
     <% @records.each do |video| %>
       <tr>
-        <td><%= link_to video["id"], action: 'show', id: video["id"] %></td>
-        <td><%= video["path"] %></td>
-        <td><%= video["format"] %></td>
-        <td><%= video["size"] %></td>
-        <td><%= video["duration"] %></td>
-        <td><%= video["mux_bitrate"] %></td>
-        <td><%= video["variable_mux_rate"] %></td>
-        <td><%= video["video_codec"] %></td>
-        <td><%= video["video_bitrate"] %></td>
-        <td><%= video["frame_rate"] %></td>
-        <td><%= video["video_height"] %></td>
-        <td><%= video["video_width"] %></td>
-        <td><%= video["audio_codec"] %></td>
-        <td><%= video["audio_bitrate"] %></td>
-        <td><%= video["audio_sample_rate"] %></td>
+        <td><%= link_to video["name"], action: 'show', id: video["id"] %></td>
+        <td><% if video["program_id"].nil? %>
+              <%= link_to "Add Link", new_program_episode_path(video_id: video["id"]) %>
+            <% else %>
+              <%= link_to "Linked", edit_program_episode_path(id: video["program_id"]) %>
+            <% end %>
+        </td>
+        <td><% if video["short_clip_id"].nil? %>
+              <%= link_to "Add Link", new_short_clip_path(video_id: video["id"]) %>
+            <% else %>
+              <%= link_to "Linked", edit_short_clip_path(id: video["short_clip_id"]) %>
+            <% end %>
+        </td>
+        <td><%= video["telvue_id"] %></td>
+        <td><%= video["created_at"] %></td>
         <td><%= video["status"] %></td>
         <td><%= video["remark"] %></td>
         <td><%= link_to 'Delete', {action: 'destroy', id: video["id"]}, method: 'delete', data: { confirm: 'Are you sure?' } %></td>

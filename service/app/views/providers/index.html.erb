@@ -4,9 +4,8 @@
 <table id='provider_list' class="display data_full">
   <thead>
     <tr>
-      <th align="left">ID</th>
-      <th align="left">Code</th>
       <th align="left">Name</th>
+      <th align="left">Code</th>
       <th align="left">Full Name</th>
       <th align="left">English Name</th>
       <th align="left">Source</th>
@@ -19,9 +18,8 @@
   <tbody>
     <% @records.each do |provider| %>
       <tr>
-        <td><%= link_to provider["id"], action: 'show', id: provider["id"] %></td>
+        <td><%= link_to provider["name"], action: 'show', id: provider["id"] %></td>
         <td><%= provider["code"] %></td>
-        <td><%= provider["name"] %></td>
         <td><%= provider["full_name"] %></td>
         <td><%= provider["eng_name"] %></td>
         <td><%= provider["source"] %></td>

@@ -56,11 +56,45 @@ class ModelHandler
     end
   end
 
+  def internal_create(hash)
+    begin
+      @item = @model.new(hash)
+      return [@item, {"error" => @item.errors.full_messages}, 400] if !@item.valid?
+      if @item.save
+        return [@item, {"info" => "#{@name} #{@item.id} was created"}, 201]
+      else
+        return [@item, {"error" => @item.errors.full_messages}, 422]
+      end
+    rescue ActiveRecord::RecordNotUnique
+      return duplicate_item
+    rescue ActiveRecord::ActiveRecordError => e
+      return [params, {"error" => e.message}, 400]
+    end
+  end
+  
   def no_item(id)
     [nil, {"error" => "Cannot find #{@name.downcase} #{id}"}, 404]
   end
 
   def duplicate_item
     [@item, {"error" => "Duplicate #{@name} already exisits"}, 409]
+  end
+
+  def self.getField(model, id, field)
+    begin
+      item = model.find id
+      return item[field]
+    rescue ActiveRecord::RecordNotFound
+      return nil
+    end
+  end
+
+  def self.idMap(model, field, options)
+    retVal = {}
+    model.all.each do |item|
+      retVal[item["id"]] = item[field]
+      options[item[field]] = item["id"]
+    end
+    [retVal, options]
   end
 end

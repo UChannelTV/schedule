@@ -1,15 +1,41 @@
 <h2>Programs</h2>
 <p id="notice"><%= notice %></p>
 
+<h3>Filter</h3>
+<%= form_tag({}, {:method => "PUT"}) do %>
+  <table id='list_query' class="display display_only">
+    <thead>
+      <tr>
+        <th align="left">Field</th>
+        <th align="left">Value</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr><td>Provider</td><td><%= select_tag "provider_id", options_for_select(@providerOptions, @provider_id) %></td></tr>
+      <tr><td>Category</td><td><%= select_tag "category_id", options_for_select(@categoryOptions, @category_id) %></td></tr>
+      <tr><td>Status</td><td><%= select_tag "status", options_for_select(@statuses, @status) %></td></tr>
+      <tr><td>limit</td><td><%= text_field_tag :limit, @limit, :size=>"50", :maxlength=>"254" %></td></tr>
+    </tbody>
+  </table>
+
+  <p/>
+  <div class="actions">
+    <%= submit_tag 'Update List' %>
+  </div>
+<% end %>
+<br/>
+<br/>
+
+
 <table id='program_list' class="display data_full">
   <thead>
     <tr>
-      <th align="left">ID</th>
       <th align="left">Name</th>
       <th align="left">Code</th>
       <th align="left">English Name</th>
-      <th align="left">Category ID</th>
-      <th align="left">Provider ID</th>
+      <th align="left">Category</th>
+      <th align="left">Provider</th>
       <th align="left">Total Episodes</th>
       <th align="left">Expected Duration (minutes)</th>
       <th align="left">Language</th>
@@ -25,12 +51,11 @@
   <tbody>
     <% @records.each do |program| %>
       <tr>
-        <td><%= link_to program["id"], action: 'show', id: program["id"] %></td>
-        <td><%= program["name"] %></td>
+        <td><%= link_to program["name"], action: 'show', id: program["id"] %></td>
         <td><%= program["code"] %></td>
         <td><%= program["eng_name"] %></td>
-        <td><%= program["category_id"] %></td>
-        <td><%= program["provider_id"] %></td>
+        <td><%= @categories[program["category_id"]] %></td>
+        <td><%= @providers[program["provider_id"]] %></td>
         <td><%= program["total_episodes"] %></td>
         <td><%= program["expected_duration"] %></td>
         <td><%= program["language"] %></td>

@@ -1,0 +1,40 @@
+<h2>Short Clip Promotions</h2>
+<p id="notice"><%= notice %></p>
+
+<table id='short_clip_promotion_list' class="display data_full">
+  <thead>
+    <tr>
+      <th align="left">ID</th>
+      <th align="left">Channel ID</th>
+      <th align="left">Start Day</th>
+      <th align="left">End Day</th>
+      <th align="left">Start Hour</th>
+      <th align="left">Number of Hours</th>
+      <th align="left">Program ID</th>
+      <th align="left">Episode</th>
+      <th align="left">Number of Plays</th>
+      <th align="left">Status</th>
+      <th align="left">Remark</th>
+      <th align="left">Action</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @records.each do |promotion| %>
+      <tr>
+        <td><%= link_to promotion["id"], action: 'show', id: promotion["id"] %></td>
+        <td><%= promotion["channel_id"] %></td>
+        <td><%= promotion["start_day"] %></td>
+        <td><%= promotion["end_day"] %></td>
+        <td><%= promotion["start_hour"] %></td>
+        <td><%= promotion["num_hours"] %></td>
+        <td><%= promotion["program_id"] %></td>
+        <td><%= promotion["episode"] %></td>
+        <td><%= promotion["num_plays"] %></td>
+        <td><%= promotion["status"] %></td>
+        <td><%= promotion["remark"] %></td>
+        <td><%= link_to 'Delete', {action: 'destroy', id: promotion["id"]}, method: 'delete', data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

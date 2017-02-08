@@ -1,15 +1,35 @@
 Rails.application.routes.draw do
   scope 'schedule' do
-    resources :channels
+    [:channels, :providers, :categories, :programs, :program_episodes, :short_clip_priorities,
+        :short_clip_promotions].each do |resource|
+      resources resource do
+        post 'import', :on => :collection, :defaults => { :format => 'json'}
+        get 'dump', :on => :collection, :defaults => { :format => 'json'}
+      end
+    end
+
     resources :channel_schedule_versions
-    resources :providers
-    resources :categories
-    resources :programs
-    resources :program_episodes
-    resources :videos
-    resources :schedule_programs
-    resources :schedule_program_episodes
-    resources :final_schedule_programs
+    
+    [:programs, :schedule_programs, :short_clips, :program_episodes, :schedule_program_episodes, 
+        :final_schedules].each do |resource|
+      resources resource do
+        post 'import', :on => :collection, :defaults => { :format => 'json'}
+        get 'dump', :on => :collection, :defaults => { :format => 'json'}
+        put :index, :on => :collection
+        put 'new', :on => :collection
+        put 'edit', :on => :member
+      end
+    end
+    
+    [:videos].each do |resource|
+      resources resource do
+        post 'import', :on => :collection, :defaults => { :format => 'json'}
+        get 'dump', :on => :collection, :defaults => { :format => 'json'}
+        post 'dump', :on => :collection, :defaults => { :format => 'json'}
+        put :index, :on => :collection
+        get 'sync', :on => :collection
+      end
+    end
   end
   
   # The priority is based upon order of creation: first created -> highest priority.

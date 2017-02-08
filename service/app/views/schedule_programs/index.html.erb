@@ -1,40 +1,93 @@
 <h2>Schedule Programs</h2>
 <p id="notice"><%= notice %></p>
 
-<table id='schedule_program_list' class="display data_full">
+<h3>Query</h3>
+<%= form_tag({}, {:method => "PUT"}) do %>
+  <table id='list_query' class="display display_only">
+    <thead>
+      <tr>
+        <th align="left">Field</th>
+        <th align="left">Value</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr><td>Channel</td><td><%= select_tag "channel_id", options_from_collection_for_select(Channel.all, "id", "name", @channel) %></td></tr>
+      <tr><td>Version</td><td><%= text_field_tag :version, @version, :size=>"50", :maxlength=>"254" %></td></tr>
+      <tr><td>Day</td><td><%= select_tag "day", options_for_select(@days, @day) %></td></tr>
+    </tbody>
+  </table>
+
+  <p/>
+  <div class="actions">
+    <%= submit_tag 'Update List' %>
+  </div>
+<% end %>
+<br/>
+<br/>
+
+<h3>單周</h3>
+<table id='schedule_program_list' class="display display_only compact cell-border">
   <thead>
     <tr>
-      <th align="left">ID</th>
-      <th align="left">Channel ID</th>
-      <th align="left">Version</th>
-      <th align="left">Program ID</th>
-      <th align="left">Week Option</th>
-      <th align="left">Day</th>
-      <th align="left">Hour</th>
-      <th align="left">Minute</th>
-      <th align="left">Second</th>
-      <th align="left">Status</th>
-      <th align="left">Remark</th>
-      <th align="left">Action</th>
+      <th align="left">Time</th>
+      <th align="left">Program</th>
+      <th align="left">Episode Option</th>
     </tr>
   </thead>
 
   <tbody>
-    <% @records.each do |schedule_program| %>
+    <% @oddWeek.each do |record| -%>
       <tr>
-        <td><%= link_to schedule_program["id"], action: 'show', id: schedule_program["id"] %></td>
-        <td><%= schedule_program["channel_id"] %></td>
-        <td><%= schedule_program["version"] %></td>
-        <td><%= schedule_program["program_id"] %></td>
-        <td><%= schedule_program["week_option"] %></td>
-        <td><%= schedule_program["day"] %></td>
-        <td><%= schedule_program["hour"] %></td>
-        <td><%= schedule_program["minute"] %></td>
-        <td><%= schedule_program["second"] %></td>
-        <td><%= schedule_program["status"] %></td>
-        <td><%= schedule_program["remark"] %></td>
-        <td><%= link_to 'Delete', {action: 'destroy', id: schedule_program["id"]}, method: 'delete', data: { confirm: 'Are you sure?' } %></td>
+        <td>
+          <% if record["bg"].nil? -%>
+            <%= Utility.durationStr(record["time"]) %>
+          <% else -%>
+            <span style="background-color: <%= record["bg"] %>"><%= Utility.durationStr(record["time"]) %></span>
+          <% end -%>
+        </td>
+        <td><% if !record["id"].nil? %>
+          <%= link_to record["name"], action: 'show', id: record["id"] %> &nbsp; &nbsp; <%= link_to "刪除", {action: 'destroy', id: record["id"]}, method: 'delete', data: { confirm: 'Are you sure?' } %>
+            <% end -%> 
+        </td>
+        <td><%= record["episode_option"] %></td>
       </tr>
-    <% end %>
+    <% end -%>
   </tbody>
 </table>
+<br/>
+<br/>
+
+<h3>雙周</h3>
+<% if @weekDiff -%>
+<table id='schedule_program_list' class="display display_only compact cell-border">
+  <thead>
+    <tr>
+      <th align="left">Time</th>
+      <th align="left">Program</th>
+      <th align="left">Episode Option</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @evenWeek.each do |record| -%>
+      <tr>
+        <td>
+          <% if record["bg"].nil? -%>
+            <%= Utility.durationStr(record["time"]) %>
+          <% else -%>
+            <span style="background-color: <%= record["bg"] %>"><%= Utility.durationStr(record["time"]) %></span>
+          <% end -%>
+        </td>
+        <td><% if !record["id"].nil? %>
+          <%= link_to record["name"], action: 'show', id: record["id"] %> &nbsp; &nbsp; <%= link_to "刪除", {action: 'destroy', id: record["id"]}, method: 'delete', data: { confirm: 'Are you sure?' } %>
+            <% end -%> 
+        </td>
+        <td><%= record["episode_option"] %></td>
+      </tr>
+    <% end -%>
+  </tbody>
+</table>
+<% else -%>
+<h4>與單周同</h4>
+<% end -%>

@@ -1,0 +1,28 @@
+<h2>Final Schedule Programs</h2>
+<p id="notice"><%= notice %></p>
+
+<h3>Query</h3>
+<%= form_tag({}, {:method => "PUT"}) do %>
+  <table id='list_query' class="display display_only">
+    <thead>
+      <tr>
+        <th align="left">Field</th>
+        <th align="left">Value</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr><td>Channel</td><td><%= select_tag "channel_id", options_from_collection_for_select(Channel.all, "id", "name", @channel) %></td></tr>
+      <tr><td>Date</td><td><%= text_field_tag "schedule_date", ("%04d-%02d-%02d" % [@date.year, @date.month, @date.day]), size: "50", maxlength: "254", class: 'datepicker' %></t
+    </tbody>
+  </table>
+
+  <p/>
+  <div class="actions">
+    <%= submit_tag 'Update List' %>
+  </div>
+<% end %>
+<br/>
+<br/>
+
+<%= render :partial => 'layouts/schedule', :locals =>{viewable: false, name: "", scheduled: Utility.verifySchedule(@records)} %>

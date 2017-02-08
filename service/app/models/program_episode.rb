@@ -1,16 +1,15 @@
-class ProgramEpisode < ActiveRecord::Base
-  validates :program_id, :episode_id, :status, presence: true
+class ProgramEpisode < ModelWithStatus
+  validates :program_id, :video_id, :internal_episode, :status, presence: true
 
   def self.external_name
     "Program Episode"
   end
 
   def self.external_params(params)
-    retVal = params.permit(:program_id, :episode, :date, :video_id, :title,
-        :eng_title, :description, :tags, :status, :remark)
+    retVal = params.permit(:program_id, :internal_episode, :episode, :video_id, :is_special, 
+        :status, :remark)
 
-    retVal[:episode_id] = retVal[:date] if !retVal[:date].nil?
-    retVal[:episode_id] = retVal[:episode] if !retVal[:episode].nil?
+    retVal[:is_special] = false if retVal[:is_special].nil?
     retVal
   end
 end

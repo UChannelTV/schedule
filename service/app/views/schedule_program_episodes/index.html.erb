@@ -1,38 +1,30 @@
 <h2>Schedule Program Episodes</h2>
 <p id="notice"><%= notice %></p>
 
-<table id='schedule_program_episode_list' class="display data_full">
-  <thead>
-    <tr>
-      <th align="left">ID</th>
-      <th align="left">Channel ID</th>
-      <th align="left">Date</th>
-      <th align="left">Program ID</th>
-      <th align="left">Episode ID</th>
-      <th align="left">Hour</th>
-      <th align="left">Minute</th>
-      <th align="left">Second</th>
-      <th align="left">Status</th>
-      <th align="left">Remark</th>
-      <th align="left">Action</th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @records.each do |schedule_program| %>
+<h3>Query</h3>
+<%= form_tag({}, {:method => "PUT"}) do %>
+  <table id='list_query' class="display display_only">
+    <thead>
       <tr>
-        <td><%= link_to schedule_program["id"], action: 'show', id: schedule_program["id"] %></td>
-        <td><%= schedule_program["channel_id"] %></td>
-        <td><%= schedule_program["date"] %></td>
-        <td><%= schedule_program["program_id"] %></td>
-        <td><%= schedule_program["episode_id"] %></td>
-        <td><%= schedule_program["hour"] %></td>
-        <td><%= schedule_program["minute"] %></td>
-        <td><%= schedule_program["second"] %></td>
-        <td><%= schedule_program["status"] %></td>
-        <td><%= schedule_program["remark"] %></td>
-        <td><%= link_to 'Delete', {action: 'destroy', id: schedule_program["id"]}, method: 'delete', data: { confirm: 'Are you sure?' } %></td>
+        <th align="left">Field</th>
+        <th align="left">Value</th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
+    </thead>
+
+    <tbody>
+      <tr><td>Channel</td><td><%= select_tag "channel_id", options_from_collection_for_select(Channel.all, "id", "name", @channel) %></td></tr>
+      <tr><td>Date</td><td><%= text_field_tag "schedule_date", ("%04d-%02d-%02d" % [@date.year, @date.month, @date.day]), size: "50", maxlength: "254", class: 'datepicker' %></t
+    </tbody>
+  </table>
+
+  <p/>
+  <div class="actions">
+    <%= submit_tag 'Update List', name: 'update' %>
+    <%= submit_tag 'Auto Generate', name: 'generate' %>
+  </div>
+<% end %>
+<br/><br/>
+
+<%= render :partial => 'layouts/schedule', :locals =>{viewable: true, name: "Manually Scheduled", scheduled: @manual_records} %>
+<br/><br/>
+<%= render :partial => 'layouts/schedule', :locals =>{viewable: false, name: "Automatically Scheduled", scheduled: Utility.verifySchedule(@auto_records)} %>

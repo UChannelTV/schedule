@@ -9,7 +9,7 @@
 
     <tbody>
       <tr><td>Channel ID</td><td><%= text_field_tag "channel_id", @record["channel_id"], size: "50", maxlength: "254"%></td></tr>
-      <tr><td>Active Day</td><td><%= text_field_tag "active_day", @record["active_day"], size: "50", maxlength: "254" %></td></tr>
+      <tr><td>Active Day</td><td><%= text_field_tag "active_day", @record["active_day"], size: "50", maxlength: "254", class: 'datepicker' %></td></tr>
     </tbody>
   </table>
 

@@ -1,3 +1,50 @@
+<h3>Choose Provider</h3>
+<%= form_tag({:action => @refresh_action}, {:method => "PUT"}) do %>
+  <table id='list_query' class="display display_only">
+    <thead>
+      <tr>
+        <th align="left">Field</th>
+        <th align="left">Value</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr><td>Provider</td><td><%= select_tag "provider_id", options_from_collection_for_select(Provider.all, "id", "name", @provider_id) %></td></tr>
+    </tbody>
+  </table>
+
+  <p/>
+  <div class="actions">
+    <%= submit_tag 'Update Programs' %>
+  </div>
+<% end %>
+<br/>
+<br/>
+
+<h3>Choose Program</h3>
+<%= form_tag({:action => @refresh_action}, {:method => "PUT"}) do %>
+  <table id='list_query' class="display display_only">
+    <thead>
+      <tr>
+        <th align="left">Field</th>
+        <th align="left">Value</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr><td>Program</td><td><%= select_tag "program_id", options_from_collection_for_select(@programs, "id", "name", @record["program_id"]) %></td></tr>
+    </tbody>
+  </table>
+
+  <p/>
+  <div class="actions">
+    <%= hidden_field_tag 'provider_id', @provider_id %>
+    <%= submit_tag 'Update Episodes' %>
+  </div>
+<% end %>
+<br/>
+<br/>
+
 <%= form_tag(@url, method: @method) do |f| %>
   <table id='schedule_program_episode_info' class="display display_only">
     <thead>
@@ -8,20 +55,23 @@
     </thead>
 
     <tbody>
-      <tr><td>Channel ID</td><td><%= text_field_tag "channel_id", @record["channel_id"], size: "50", maxlength: "254"%></td></tr>
-      <tr><td>Date</td><td><%= text_field_tag "date", @record["date"], size: "50", maxlength: "254"%></td></tr>
-      <tr><td>Program ID</td><td><%= text_field_tag "program_id", @record["program_id"], size: "50", maxlength: "254"%></td></tr>
-      <tr><td>Episode ID</td><td><%= text_field_tag "episode_id", @record["episode_id"], size: "50", maxlength: "254" %></td></tr>
-      <tr><td>Hour</td><td><%= text_field_tag "Hour", @record["hour"], size: "50", maxlength: "254" %></td></tr>
-      <tr><td>Minute</td><td><%= text_field_tag "Minute", @record["minute"], size: "50", maxlength: "254" %></td></tr>
-      <tr><td>Second</td><td><%= text_field_tag "Second", @record["second"], size: "50", maxlength: "254" %></td></tr>
-      <tr><td>Status</td><td><%= text_field_tag "status", @record["status"], size: "50", maxlength: "254" %></td></tr>
+      <tr><td>Channel ID</td><td><%= @record["channel_id"] %></td></tr>
+      <tr><td>Date</td><td><%= @record["date"] %></td></tr>
+      <tr><td>Program</td><td><%= ModelHandler.getField(Program, @record["program_id"], "name") %></td></tr>
+      <tr><td>Expected Duration</td><td><%= text_field_tag "expected_duration", @record["expected_duration"], size: "50", maxlength: "254" %></td></tr>
+      <tr><td>Video</td><td><%= select_tag "video_id", options_for_select(@videos, @record["video_id"]) %></td></tr>
+      <tr><td>Hour</td><td><%= select_tag "hour", options_for_select(Array(0..23), @record["hour"]) %></td></tr>
+      <tr><td>Minute</td><td><%= select_tag "minute", options_for_select(Array(0..59), @record["minute"]) %></td></tr>
+      <tr><td>Second</td><td><%= select_tag "second", options_for_select(Array(0..59), @record["second"]) %></td></tr>
       <tr><td>Remark</td><td><%= text_field_tag "remark", @record["remark"], size: "50", maxlength: "254" %></td></tr>
     </tbody>
   </table>
 
   <p/>
   <div class="actions">
+    <%= hidden_field_tag 'channel_id', @record["channel_id"] %>
+    <%= hidden_field_tag 'date', @record["date"] %>
+    <%= hidden_field_tag 'program_id', @record["program_id"] %>
     <%= submit_tag %>
   </div>
 <% end %>

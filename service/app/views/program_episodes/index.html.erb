@@ -1,15 +1,42 @@
-<h2>Program Episodes</h2>
+<h2>節目</h2>
 <p id="notice"><%= notice %></p>
+
+<h3>Filter</h3>
+<%= form_tag({}, {:method => "PUT"}) do %>
+  <table id='list_query' class="display display_only">
+    <thead>
+      <tr>
+        <th align="left">Field</th>
+        <th align="left">Value</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr><td>Provider</td><td><%= select_tag "provider_id", options_for_select(@providerOptions, @provider_id) %></td></tr>
+      <tr><td>Category</td><td><%= select_tag "category_id", options_for_select(@categoryOptions, @category_id) %></td></tr>
+      <tr><td>Status</td><td><%= select_tag "status", options_for_select(@statuses, @status) %></td></tr>
+      <tr><td>Limit</td><td><%= text_field_tag :limit, @limit, :size=>"50", :maxlength=>"254" %></td></tr>
+    </tbody>
+  </table>
+
+  <p/>
+  <div class="actions">
+    <%= submit_tag 'Update List' %>
+  </div>
+<% end %>
+<br/>
+<br/>
 
 <table id='program_list' class="display data_full">
   <thead>
     <tr>
-      <th align="left">ID</th>
-      <th align="left">Program ID</th>
+      <th align="left">Program</th>
+      <th align="left">Internal Episode</th>
       <th align="left">Episode</th>
-      <th align="left">Date</th>
-      <th align="left">Video ID</th>
-      <th align="left">Is Short Clip</th>
+      <th align="left">Video</th>
+      <th align="left">Category</th>
+      <th align="left">Provider</th>
+      <th align="left">Duration</th>
       <th align="left">Is Special</th>
       <th align="left">Status</th>
       <th align="left">Remark</th>
@@ -18,18 +45,19 @@
   </thead>
 
   <tbody>
-    <% @records.each do |program| %>
+    <% @records.each do |record| %>
       <tr>
-        <td><%= link_to program["id"], action: 'show', id: program["id"] %></td>
-        <td><%= program["program_id"] %></td>
-        <td><%= program["episode"] %></td>
-        <td><%= program["date"] %></td>
-        <td><%= program["video_id"] %></td>
-        <td><%= program["is_short_clip"] %></td>
-        <td><%= program["is_special"] %></td>
-        <td><%= program["status"] %></td>
-        <td><%= program["remark"] %></td>
-        <td><%= link_to 'Delete', {action: 'destroy', id: program["id"]}, method: 'delete', data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to record["program"], controller: 'programs', action: 'show', id: record["program_id"] %></td>
+        <td><%= record["internal_episode"] %></td>
+        <td><%= link_to record["episode"], action: 'show', id: record["id"] %></td>
+        <td><%= link_to record["video"], controller: 'videos', action: 'show', id: record["video_id"] %></td>
+        <td><%= link_to @categories[record["category_id"]], controller: 'categories', action: 'show', id: record["category_id"] %></td>
+        <td><%= link_to @providers[record["provider_id"]], controller: 'providers', action: 'show', id: record["provider_id"] %></td>
+        <td><%= Utility.durationStr(record["duration"]) %></td>
+        <td><%= record["is_special"] %></td>
+        <td><%= record["status"] %></td>
+        <td><%= record["remark"] %></td>
+        <td><%= link_to 'Delete', {action: 'destroy', id: record["id"]}, method: 'delete', data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>

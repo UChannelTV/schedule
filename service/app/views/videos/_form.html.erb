@@ -8,12 +8,14 @@
     </thead>
 
     <tbody>
+      <tr><td>Name</td><td><%= text_field_tag "name", @record["name"], size: "50", maxlength: "254"%></td></tr>
       <tr><td>Path</td><td><%= text_field_tag "path", @record["path"], size: "50", maxlength: "254"%></td></tr>
+      <tr><td>TelVue ID</td><td><%= text_field_tag "telvue_id", @record["telvue_id"], size: "50", maxlength: "254"%></td></tr>
       <tr><td>Format</td><td><%= text_field_tag "format", @record["format"], size: "50", maxlength: "254"%></td></tr>
       <tr><td>Size</td><td><%= text_field_tag "size", @record["size"], size: "50", maxlength: "254"%></td></tr>
       <tr><td>Duration</td><td><%= text_field_tag "duration", @record["duration"], size: "50", maxlength: "254"%></td></tr>
-      <tr><td>Mux Bitrate</td><td><%= check_box_tag "mux_bitrate", '1', @record["mux_bitrate"] %></td></tr>
-      <tr><td>Variable Mux Rate</td><td><%= text_field_tag "variable_mux_rate", @record["variable_mux_rate"], size: "50", maxlength: "254"%></td></tr>
+      <tr><td>Mux Bitrate</td><td><%= text_field_tag "mux_bitrate", @record["mux_bitrate"], size: "50", maxlength: "254"%></td></tr>
+      <tr><td>Variable Mux Rate</td><td><%= check_box_tag "variable_mux_rate", '1', @record["variable_mux_rate"] %></td></tr>
       <tr><td>Video Codec</td><td><%= text_field_tag "video_codec", @record["video_codec"], size: "50", maxlength: "254"%></td></tr>
       <tr><td>Video Bitrate</td><td><%= text_field_tag "video_bitrate", @record["video_bitrate"], size: "50", maxlength: "254"%></td></tr>
       <tr><td>Frame Rate</td><td><%= text_field_tag "frame_rate", @record["frame_rate"], size: "50", maxlength: "254"%></td></tr>
@@ -22,7 +24,7 @@
       <tr><td>Audio Codec</td><td><%= text_field_tag "audio_codec", @record["audio_codec"], size: "50", maxlength: "254"%></td></tr>
       <tr><td>Audio Bitrate</td><td><%= text_field_tag "audio_bitrate", @record["audio_bitrate"], size: "50", maxlength: "254"%></td></tr>
       <tr><td>Audio Sample Rate</td><td><%= text_field_tag "audio_sample_rate", @record["audio_sample_rate"], size: "50", maxlength: "254"%></td></tr>
-      <tr><td>Status</td><td><%= text_field_tag "status", @record["status"], size: "50", maxlength: "254" %></td></tr>
+      <tr><td>Status</td><td><%= select_tag "status", options_for_select(@status_list, @record["status"]) %></td></tr>
       <tr><td>Remark</td><td><%= text_field_tag "remark", @record["remark"], size: "50", maxlength: "254" %></td></tr>
     </tbody>
   </table>

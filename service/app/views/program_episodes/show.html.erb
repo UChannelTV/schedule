@@ -12,12 +12,10 @@
     </thead>
 
     <tbody>
-      <tr><td>ID</td><td><%= @record["id"] %></td></tr>
-      <tr><td>Program ID</td><td><%= @record["program_id"] %></td></tr>
+      <tr><td>Program</td><td><%= link_to ModelHandler.getField(Program, @record["program_id"], "name"), controller: "programs", action: "show", id: @record["program_id"] %></td></tr>
+      <tr><td>Internal Episode</td><td><%= @record["internal_episode"] %></td></tr>
       <tr><td>Episode</td><td><%= @record["episode"] %></td></tr>
-      <tr><td>Date</td><td><%= @record["date"] %></td></tr>
-      <tr><td>Video ID</td><td><%= @record["video_id"] %></td></tr>
-      <tr><td>Is Short Clip</td><td><%= @record["is_short_clip"] %></td></tr>
+      <tr><td>Video</td><td><%= link_to ModelHandler.getField(Video, @record["video_id"], "name"), controller: "videos", action: "show", id: @record["video_id"] %></td></tr>
       <tr><td>Is Special</td><td><%= @record["is_special"] %></td></tr>
       <tr><td>Status</td><td><%= @record["status"] %></td></tr>
       <tr><td>Remark</td><td><%= @record["remark"] %></td></tr>

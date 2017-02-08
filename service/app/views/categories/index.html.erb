@@ -4,7 +4,6 @@
 <table id='category_list' class="display data_full">
   <thead>
     <tr>
-      <th align="left">ID</th>
       <th align="left">Name</th>
       <th align="left">English Name</th>
       <th align="left">Status</th>
@@ -16,8 +15,7 @@
   <tbody>
     <% @records.each do |category| %>
       <tr>
-        <td><%= link_to category["id"], action: 'show', id: category["id"] %></td>
-        <td><%= category["name"] %></td>
+        <td><%= link_to category["name"], action: 'show', id: category["id"]  %></td>
         <td><%= category["eng_name"] %></td>
         <td><%= category["status"] %></td>
         <td><%= category["remark"] %></td>
