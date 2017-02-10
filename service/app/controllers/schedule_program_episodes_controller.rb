@@ -1,4 +1,5 @@
 class ScheduleProgramEpisodesController < AdminController
+  include ShortClipTool
   def initialize
     super(ScheduleProgramEpisode, false)
   end
@@ -22,7 +23,7 @@ class ScheduleProgramEpisodesController < AdminController
       generate(date)
     end
     
-    query = "generated_episode_schedules.id, hour * 3600 + minute * 60 + second as time, " +
+    query = "generated_episode_schedules.id, hour * 3600 + minute * 60 + second as time, origin, " +
         "video_id, program_id, generated_episode_schedules.remark, generated_episode_schedules.episode, " +
         "programs.name as program, videos.name as video_name, generated_episode_schedules.duration"
     join = "LEFT JOIN programs on programs.id = generated_episode_schedules.program_id " +
@@ -114,7 +115,7 @@ class ScheduleProgramEpisodesController < AdminController
   private
   def generate(date)
     GeneratedEpisodeSchedule.delete_all("date = '#{date}' and channel_id = #{@channel_id}")
-
+    ActiveRecord::Base.connection.execute("alter table generated_episode_schedules auto_increment = 1")
     version = ChannelScheduleVersion.get_version(@channel_id, date)
     return if version.nil?
    
@@ -134,10 +135,12 @@ class ScheduleProgramEpisodesController < AdminController
       program_episodes[key] = ScheduleProgramEpisode.nextEpisodes(date, key, val).collect{|x| convert(x)}
     end
 
+    records = []
     @manual_records.each do |program|
-      record = {"channel_id" => @channel_id, "date" => date, "program_id" => program["program_id"],
+      record = {"channel_id" => @channel_id, "date" => date, "program_id" => program["program_id"], "origin" => 0,
         "episode" => program["episode"], "video_id" => program["video_id"], "hour" => program["time"] / 3600,
         "minute" => program["time"] / 60 % 60, "second" => program["time"] % 60, "duration" => program["duration"]}
+      records << {"time" => program["time"], "duration" => record["duration"]}
       ModelHandler.new(GeneratedEpisodeSchedule).internal_create(record)
     end
 
@@ -150,10 +153,46 @@ class ScheduleProgramEpisodesController < AdminController
       time = program["hour"] * 3600 + program["minute"] * 60 + program["second"]      
       if !is_conflict(time, episode["duration"])
         record = {"channel_id" => @channel_id, "date" => date, "program_id" => program["program_id"],
-          "episode" => episode["internal_episode"], "video_id" => episode["video_id"],
+          "episode" => episode["internal_episode"], "video_id" => episode["video_id"], "origin" => 1,
           "hour" => program["hour"], "minute" => program["minute"], "second" => program["second"],
           "duration" => episode["duration"]}
+        records << {"time" => time, "duration" => record["duration"]}
         ModelHandler.new(GeneratedEpisodeSchedule).internal_create(record)
+      end
+    end
+
+    short_clip_fill(records, date)
+  end
+
+  def short_clip_fill(records, date)
+    st = 0
+    pt, dur = [], []
+    records.sort{|a, b| a["time"] <=> b["time"]}.each do |record|
+      if record["time"] > st
+        pt << st
+        dur << record["time"] - st
+      end
+      st = record["time"] + record["duration"]
+    end
+
+    if st < 86400
+      pt << st
+      dur << 86400 - st
+    end
+
+    return if pt.size == 0
+
+    short_clips = ShortClip.select("program_id, video_id, duration").order(duration: :asc).
+        collect{|x| convert(x)}
+    clips = ShortClipTool.find(short_clips, dur)
+    0.upto(pt.size - 1) do |n|
+      time = pt[n]
+      clips[n].each do |clip|
+        record = {"channel_id" => @channel_id, "date" => date, "program_id" => clip["program_id"],
+          "video_id" => clip["video_id"], "origin" => 2, "hour" => time / 3600, "minute" => time / 60 % 60,
+          "second" => time % 60, "duration" => clip["duration"]}
+        ModelHandler.new(GeneratedEpisodeSchedule).internal_create(record)
+        time += record["duration"]
       end
     end
   end

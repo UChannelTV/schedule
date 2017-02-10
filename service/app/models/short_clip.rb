@@ -1,4 +1,6 @@
 class ShortClip < ModelWithStatus
+  include ShortClipTool
+
   validates :program_id, :category_id, :duration, :video_id, :status, presence: true
 
   def self.external_name

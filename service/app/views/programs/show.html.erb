@@ -15,8 +15,8 @@
       <tr><td>Name</td><td><%= @record["name"] %></td></tr>
       <tr><td>Code</td><td><%= @record["code"] %></td></tr>
       <tr><td>English Name</td><td><%= @record["eng_name"] %></td></tr>
-      <tr><td>Category</td><td><%= ModelHandler.getField(Category, @record["category_id"], "name") %></td></tr>
-      <tr><td>Provider</td><td><%= ModelHandler.getField(Provider, @record["provider_id"], "name") %></td></tr>
+      <tr><td>Category</td><td><%= link_to ModelHandler.getField(Category, @record["category_id"], "name"), controller: "categories", action: "show", id: @record["category_id"] %></td></tr>
+      <tr><td>Provider</td><td><%= link_to ModelHandler.getField(Provider, @record["provider_id"], "name"), controller: "providers", action: "show", id: @record["provider_id"] %></td></tr>
       <tr><td>Total Episodes</td><td><%= @record["total_episodes"] %></td></tr>
       <tr><td>Expected Duration (minutes)</td><td><%= @record["expected_duration"] %></td></tr>
       <tr><td>Language</td><td><%= @record["language"] %></td></tr>

@@ -54,8 +54,8 @@
         <td><%= link_to program["name"], action: 'show', id: program["id"] %></td>
         <td><%= program["code"] %></td>
         <td><%= program["eng_name"] %></td>
-        <td><%= @categories[program["category_id"]] %></td>
-        <td><%= @providers[program["provider_id"]] %></td>
+        <td><%= link_to @categories[program["category_id"]], controller: 'categories', action: 'show', id: program["category_id"] %></td>
+        <td><%= link_to @providers[program["provider_id"]], controller: 'providers', action: 'show', id: program["provider_id"] %></td>
         <td><%= program["total_episodes"] %></td>
         <td><%= program["expected_duration"] %></td>
         <td><%= program["language"] %></td>

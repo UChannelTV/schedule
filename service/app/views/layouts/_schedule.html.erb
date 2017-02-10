@@ -8,16 +8,19 @@
       <th align="left">Episode</th>
       <th align="left">Video</th>
       <th align="left">Remark</th>
+      <% if viewable -%>
+        <th align="left">Delete</th>
+      <% end -%>
     </tr>
   </thead>
 
   <tbody>
     <% scheduled.each do |record| %>
       <tr><td>
-         <% if record["bg"].nil? -%>
+         <% if record["color"].nil? -%>
             <%= Utility.durationStr(record["time"]) %>
           <% else -%>
-            <span style="background-color: <%= record["bg"] %>"><%= Utility.durationStr(record["time"]) %></span>
+            <span style="color: <%= record["color"] %>"><%= Utility.durationStr(record["time"]) %></span>
           <% end -%></td>
         <td><% if viewable -%>
           <%= link_to record["program"], action: 'show', id: record["id"]  %>
@@ -30,6 +33,9 @@
            <%= link_to record["video_name"], controller: 'videos', action: 'show', id: record["video_id"]  %>
         <% end -%></td>
         <td><%= record["remark"] %></td>
+        <% if viewable -%>
+          <td><%= link_to 'Delete', {action: 'destroy', id: record["id"]}, method: 'delete', data: { confirm: 'Are you sure?' } %></td>
+        <% end -%>
       </tr>
     <% end %>
   </tbody>

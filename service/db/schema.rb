@@ -62,6 +62,7 @@ ActiveRecord::Schema.define(version: 20170125022029) do
     t.date     "date"
     t.integer  "program_id", limit: 4
     t.integer  "duration",   limit: 4
+    t.integer  "origin",     limit: 4
     t.integer  "episode",    limit: 4
     t.integer  "video_id",   limit: 4
     t.integer  "hour",       limit: 4

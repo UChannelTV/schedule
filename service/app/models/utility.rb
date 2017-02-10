@@ -32,10 +32,16 @@ module Utility
   def self.verifySchedule(scheduled)
     st, retVal = 0, []
     scheduled.each do |item|
+      origin = item["origin"].to_i
+      if origin == 0
+        item["color"] = "green"
+      elsif origin == 1
+        item["color"] = "blue"
+      end
       if item["time"] > st
-        retVal << {"bg" => "yellow", "time" => st, "program" => "Missing", "duration" => item["time"] - st} 
+        retVal << {"color" => "yellow", "time" => st, "program" => "Missing", "duration" => item["time"] - st} 
       elsif item["time"] < st
-        retVal << {"bg" => "red", "time" => item["time"], "program" => "Overlap", "duration" => st - item["time"]}
+        retVal << {"color" => "red", "time" => item["time"], "program" => "Overlap", "duration" => st - item["time"]}
       end
       retVal << item
       st = item["time"] + item["duration"].to_i

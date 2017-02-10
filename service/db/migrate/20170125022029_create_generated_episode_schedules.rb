@@ -5,6 +5,7 @@ class CreateGeneratedEpisodeSchedules < ActiveRecord::Migration
       t.date :date
       t.integer :program_id
       t.integer :duration
+      t.integer :origin
       t.integer :episode
       t.integer :video_id
       t.integer :hour
