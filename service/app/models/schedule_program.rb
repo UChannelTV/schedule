@@ -10,7 +10,7 @@ class ScheduleProgram <  ActiveRecord::Base
   end
 
   def self.external_params(params)
-    params.permit(:channel_id, :version, :program_id, :week_option, :day, :hour, :minute, :second, :remark)
+    params.permit(:channel_id, :version, :program_id, :week_option, :episode_option, :day, :hour, :minute, :second, :remark)
   end
   
   def self._find(channel_id, version, day)

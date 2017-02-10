@@ -1,37 +1,37 @@
 Rails.application.routes.draw do
-  scope 'schedule' do
-    [:channels, :providers, :categories, :programs, :program_episodes, :short_clip_priorities,
-        :short_clip_promotions].each do |resource|
-      resources resource do
-        post 'import', :on => :collection, :defaults => { :format => 'json'}
-        get 'dump', :on => :collection, :defaults => { :format => 'json'}
-      end
-    end
-
-    resources :channel_schedule_versions
-    
-    [:programs, :schedule_programs, :short_clips, :program_episodes, :schedule_program_episodes, 
-        :final_schedules].each do |resource|
-      resources resource do
-        post 'import', :on => :collection, :defaults => { :format => 'json'}
-        get 'dump', :on => :collection, :defaults => { :format => 'json'}
-        put :index, :on => :collection
-        put 'new', :on => :collection
-        put 'edit', :on => :member
-      end
-    end
-    
-    [:videos].each do |resource|
-      resources resource do
-        post 'import', :on => :collection, :defaults => { :format => 'json'}
-        get 'dump', :on => :collection, :defaults => { :format => 'json'}
-        post 'dump', :on => :collection, :defaults => { :format => 'json'}
-        put :index, :on => :collection
-        get 'sync', :on => :collection
-      end
+  [:channels, :providers, :categories, :programs, :program_episodes, :short_clip_priorities,
+      :short_clip_promotions].each do |resource|
+    resources resource do
+      post 'import', :on => :collection, :defaults => { :format => 'json'}
+      get 'dump', :on => :collection, :defaults => { :format => 'json'}
     end
   end
-  
+
+  resources :channel_schedule_versions
+    
+  [:programs, :schedule_programs, :short_clips, :program_episodes, :schedule_program_episodes, 
+      :final_schedules].each do |resource|
+    resources resource do
+      post 'import', :on => :collection, :defaults => { :format => 'json'}
+      get 'dump', :on => :collection, :defaults => { :format => 'json'}
+      put :index, :on => :collection
+      put 'new', :on => :collection
+      put 'edit', :on => :member
+    end
+  end
+    
+  [:videos].each do |resource|
+    resources resource do
+      post 'import', :on => :collection, :defaults => { :format => 'json'}
+      get 'dump', :on => :collection, :defaults => { :format => 'json'}
+      post 'dump', :on => :collection, :defaults => { :format => 'json'}
+      put :index, :on => :collection
+      get 'sync', :on => :collection
+    end
+  end
+ 
+  root :to => "program#index"
+ 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

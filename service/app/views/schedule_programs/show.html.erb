@@ -21,7 +21,7 @@
         </td></tr>
       <tr><td>Program</td><td><%= link_to @program_name, controller: "programs", action: "show", id: @record["program_id"] %></td></tr>
       <tr><td>Week Option</td><td><%= Utility.weekOption(@record["week_option"]) %></td></tr>
-      <tr><td>Episode Option</td><td><%= @record["week_option"] %></td></tr>
+      <tr><td>Episode Option</td><td><%= @record["episode_option"] %></td></tr>
       <tr><td>Day</td><td><%= Utility.day(@record["day"]) %></td></tr>
       <tr><td>Hour</td><td><%= @record["hour"] %></td></tr>
       <tr><td>Minute</td><td><%= @record["minute"] %></td></tr>

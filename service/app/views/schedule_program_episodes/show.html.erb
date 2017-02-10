@@ -15,7 +15,7 @@
       <tr><td>Channel</td><td><%= ModelHandler.getField(Channel, @record["channel_id"], "name") %></td></tr>
       <tr><td>Date</td><td><%= @record["date"] %></td></tr>
       <tr><td>Program</td><td><%= ModelHandler.getField(Program, @record["program_id"], "name") %></td></tr>
-      <tr><td>Expected Duration</td><td><%= @record["expected_duration"] %></td></tr>
+      <tr><td>Expected Duration</td><td><%= Utility.durationStr(@record["expected_duration"]) %></td></tr>
       <tr><td>Episode</td><td><%= @record["episode"] %></td></tr>
       <tr><td>Hour</td><td><%= @record["hour"] %></td></tr>
       <tr><td>Minute</td><td><%= @record["minute"] %></td></tr>
