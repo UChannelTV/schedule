@@ -44,7 +44,7 @@ class VideoImport
     
     puts "#{newVideos.size} videos in schedule missing from videos table"
     Import.import(@host, "videos", newVideos.values.to_a) if newVideos.size > 0
-    
+
     res = HttpUtil.post(@url + "/dump", @header, {"telvue_id" => ids}.to_json)
     existingVideos =  {}
     JSON.parse(res.body).each do |v|
@@ -76,7 +76,10 @@ class VideoImport
     end
 
     puts "#{newVideos.size} new videos"
-    Import.import(@url.gsub("/schedule/videos", ""), "videos", newVideos) if newVideos.size > 0
+    if newVideos.size > 0
+      res = Import.import(@url.gsub("/schedule/videos", ""), "videos", newVideos)
+      puts res.body
+    end
   end
 
   def getActiveVideos
