@@ -10,11 +10,11 @@ class FinalScheduleImporter
     @vi = VideoImport.new(host)
   end
 
-  def import(isCsv, filename, channel_id, date)
-    videos = (isCsv) ? readCsv(filename, channel_id, date) :
-       readHtml(filename, channel_id, date)
+  def import(channel_id, date)
+    puts date
+    videos = TelVueParser.new.getSchedule(channel_id, Date.parse(date))
     vids = @vi.importScheduledVideo(videos)
-    
+
     videos.each do |video|
       video.delete("name")
       video["video_id"] = vids[video["telvue_id"]]
@@ -24,6 +24,7 @@ class FinalScheduleImporter
     res = HttpUtil.post(@host + "/schedule/final_schedules/import", header,
         {"entities" => videos, "day" => date}.to_json)
 
+    puts res.body
     puts "Import scheduled videos on #{date}"
   end
 
